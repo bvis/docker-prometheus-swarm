@@ -1,6 +1,6 @@
 # Prometheus Swarm
 
-A sample image taht can be used as a base for collecting Swarm mode metrics in a prometheus
+A sample image that can be used as a base for collecting Swarm mode metrics in a prometheus
 
 ## How to test it
 
