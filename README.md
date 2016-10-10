@@ -44,4 +44,6 @@ docker service create \
 
 Once it's initiated you just need to add the prometheus as a data source in Grafana and import an existing dashboard for getting impressive graphs.
 
+Now you can configure the prometheus datasource and import any Grafana dashboard that measures the cadvisor and node-exporter metrics.
+
 * This is just an initial test *
