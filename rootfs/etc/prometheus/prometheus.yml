@@ -6,6 +6,16 @@ global:
       cluster: swarm
       replica: "1"
 
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'prometheus-swarm'
+
+rule_files:
+  - "alert.rules_nodes"
+  - "alert.rules_containers"
+  - "alert.rules_service-groups"
+
 scrape_configs:
   - job_name: 'prometheus'
     dns_sd_configs:
