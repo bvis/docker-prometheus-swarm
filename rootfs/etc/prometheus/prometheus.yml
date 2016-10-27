@@ -13,7 +13,7 @@ global:
 
 rule_files:
   - "alert.rules_nodes"
-  - "alert.rules_containers"
+  - "alert.rules_tasks"
   - "alert.rules_service-groups"
 
 scrape_configs:
