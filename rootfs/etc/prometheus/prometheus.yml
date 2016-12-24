@@ -37,3 +37,10 @@ scrape_configs:
       - 'tasks.node-exporter'
       type: 'A'
       port: 9100
+
+  - job_name: 'docker-exporter'
+    dns_sd_configs:
+    - names:
+      - 'tasks.docker-exporter'
+      type: 'A'
+      port: 4999
