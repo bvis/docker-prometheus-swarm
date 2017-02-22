@@ -13,7 +13,7 @@ docker \
   service create --name cadvisor \
   --mode global \
   --network monitoring \
-  --label com.docker.stack.namespace=monitoring \  
+  --label com.docker.stack.namespace=monitoring \
   --container-label com.docker.stack.namespace=monitoring \
   --mount type=bind,src=/,dst=/rootfs:ro \
   --mount type=bind,src=/var/run,dst=/var/run:rw \
