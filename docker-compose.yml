@@ -9,7 +9,7 @@ volumes:
 
 services:
   cadvisor:
-    image: google/cadvisor:v0.24.1
+    image: google/cadvisor:${CADVISOR_VERSION:-v0.24.1}
     networks:
       - monitoring
     volumes:
@@ -29,7 +29,7 @@ services:
           memory: 64M
 
   node-exporter:
-    image: basi/node-exporter:v1.13.0
+    image: basi/node-exporter:${NODE_EXPORTER_VERSION:-v1.13.0}
     networks:
       - monitoring
     volumes:
@@ -51,7 +51,7 @@ services:
           memory: 16M
 
   docker-exporter:
-    image: basi/socat:v0.1.0
+    image: basi/socat:${DOCKER_EXPORTER_VERSION:-v0.1.0}
     networks:
       - monitoring
     deploy:
@@ -65,7 +65,7 @@ services:
           memory: 4M
 
   alertmanager:
-    image: basi/alertmanager:v0.1.0
+    image: basi/alertmanager:${ALERTMANAGER_VERSION:-v0.1.0}
     networks:
       - monitoring
       # - logging
@@ -87,7 +87,7 @@ services:
           memory: 16M
 
   prometheus:
-    image: basi/prometheus-swarm:latest
+    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v0.4.1}
     ports:
       - "9090"
     networks:
@@ -105,7 +105,7 @@ services:
           memory: 128M
 
   grafana:
-    image: basi/grafana:v4.1.1
+    image: basi/grafana:${GRAFANA_VERSION:-v4.1.1}
     ports:
       - "3000:3000"
     networks:
