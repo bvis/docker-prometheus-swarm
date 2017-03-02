@@ -3,13 +3,13 @@ global:
   evaluation_interval: 30s
 
   labels:
-      cluster: swarm
-      replica: "1"
+    cluster: swarm
+    replica: "1"
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'prometheus-swarm'
+    monitor: 'prometheus-swarm'
 
 rule_files:
   - "alert.rules_nodes"

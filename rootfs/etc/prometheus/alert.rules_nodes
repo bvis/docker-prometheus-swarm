@@ -46,4 +46,3 @@ ALERT DiskWillFillIn8Hours
        summary = "DISK SPACE FULL IN 8 HOURS: NODE '{{ $labels.host }}'",
        description = "{{ $labels.instance }} is writing a lot.",
    }
-   LABELS { severity="page" }
