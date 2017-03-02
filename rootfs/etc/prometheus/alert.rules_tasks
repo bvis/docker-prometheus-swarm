@@ -1,6 +1,6 @@
 
 ALERT high_cpu_usage_on_container
-  IF sum(rate(container_cpu_usage_seconds_total{container_label_com_docker_swarm_task_name=~".+"}[5m])) by (container_label_com_docker_swarm_task_name,instance) * 100 > 80
+  IF sum(rate(container_cpu_usage_seconds_total{container_label_com_docker_swarm_task_name=~".+"}[5m])) by (container_label_com_docker_swarm_task_name,instance) * 100 > 200
   FOR 5m
   ANNOTATIONS {
       summary = "HIGH CPU USAGE WARNING: TASK '{{ $labels.container_label_com_docker_swarm_task_name }}' on '{{ $labels.instance }}'",

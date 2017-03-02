@@ -5,7 +5,8 @@ A sample image that can be used as a base for collecting Swarm mode metrics in P
 ## How to use it
 
 You can configure the full system with the next commands, that create the Prometheus, Grafana and exporters services needed.
-```
+
+```bash
 docker \
   network create --driver overlay monitoring
 
@@ -83,6 +84,12 @@ docker \
 Once everyting is running you just need to connect to grafana and import the [Docker Swarm & Container Overview](https://grafana.net/dashboards/609)
 
 In case you don't have an Elasticsearch instance with logs and errors you could provide an invalid configuration. But I suggest you to have it correctly configured to get all the dashboard offers.
+
+You can use the provided `docker-compose.yml` file as an example. You can deploy the full stack with the command:
+
+```bash
+docker stack deploy --compose-file docker-compose.yml monitoring
+```
 
 ### Docker Engine Metrics
 In case you have activated the metrics endpoint in your docker swarm cluster you could import the [Docker Engine Metrics](https://grafana.net/dashboards/1229) dashboard as well, which offers complementary data about the docker daemon itself.
