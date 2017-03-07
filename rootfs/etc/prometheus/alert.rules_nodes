@@ -36,10 +36,10 @@ ALERT node_running_out_of_disk_space
   FOR 5m
   ANNOTATIONS {
       summary = "LOW DISK SPACE WARING: NODE '{{ $labels.host }}'",
-      description = "More than 80% of disk used. Disk usage {{ humanize $value }} GB.",
+      description = "More than 80% of disk used. Disk usage {{ humanize $value }}%.",
   }
 
-ALERT DiskWillFillIn8Hours
+ALERT disk_will_fill_in_8_hours
    IF predict_linear(node_filesystem_free{mountpoint="/"}[1h], 8*3600) < 0
    FOR 5m
    ANNOTATIONS {
