@@ -97,7 +97,11 @@ Once everyting is running you just need to connect to grafana and import the [Do
 
 In case you don't have an Elasticsearch instance with logs and errors you could provide an invalid configuration. But I suggest you to have it correctly configured to get all the dashboard offers.
 
-You can use the provided `docker-compose.yml` file as an example. You can deploy the full stack with the command:
+You can use the provided `docker-compose.yml` file as an example. You can deploy the full stack with the command  
+
+If you get error `failed to find usable hardware address...` on the elasticsearch container, then most likely this can be the fix  
+
+`sudo sysctl -w vm.max_map_count=262144`  `
 
 ```bash
 docker stack deploy --compose-file docker-compose.yml monitoring
