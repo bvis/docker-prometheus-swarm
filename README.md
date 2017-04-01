@@ -113,7 +113,7 @@ Navigate to graphana UI using http://<docker-host/docker-swarm-host>:3000 (Defau
 
 - Add elasticsearch as data source
 
-~[elasticsearch](./images/elasticsearch-datasource.png)
+![elasticsearch](./images/elasticsearch-datasource.png)
 
 - Import [Docker Swarm & Container Overview](https://grafana.net/dashboards/609)
 
