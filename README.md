@@ -79,6 +79,18 @@ docker \
   -e "ELASTICSEARCH_USER=$ES_USERNAME" \
   -e "ELASTICSEARCH_PASSWORD=$ES_PASSWORD" \
   basi/grafana
+
+
+docker \
+  service create \
+  --name elk \
+  --network monitoring \
+  --label com.docker.stack.namespace=monitoring \
+  --container-label com.docker.stack.namespace=monitoring \
+  --publish 5601:5601 \
+  --publish 9200:9200 \
+  --publish 5044:5044 \
+  sebp/elk
 ```
 
 Once everyting is running you just need to connect to grafana and import the [Docker Swarm & Container Overview](https://grafana.net/dashboards/609)
@@ -89,7 +101,29 @@ You can use the provided `docker-compose.yml` file as an example. You can deploy
 
 ```bash
 docker stack deploy --compose-file docker-compose.yml monitoring
-```
+```  
+
+### Add Data Sources
+
+Navigate to graphana UI using http://<docker-host/docker-swarm-host>:3000 (Default creds: admin/admin)  
+
+- Add prometheus as data source
+
+![prometheus](./images/prometheus-datasource.png)
+
+- Add elasticsearch as data source
+
+~[elasticsearch](./images/elasticsearch-datasource.png)
+
+- Import [Docker Swarm & Container Overview](https://grafana.net/dashboards/609)
+
+![Import Dashboard](./images/import-dashboard.png)
+
+- Dashboard looks like this
+
+![Dashboard](./images/dashboard.png)
+
+
 
 ### Docker Engine Metrics
 In case you have activated the metrics endpoint in your docker swarm cluster you could import the [Docker Engine Metrics](https://grafana.net/dashboards/1229) dashboard as well, which offers complementary data about the docker daemon itself.
