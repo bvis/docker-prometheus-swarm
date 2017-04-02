@@ -1,0 +1,2218 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "DS_ELASTICSEARCH_- LOGS",
+      "label": "ElasticSearch - Logs",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "elasticsearch",
+      "pluginName": "Elasticsearch"
+    },
+    {
+      "name": "DS_ELASTICSEARCH_- ALERTS",
+      "label": "ElasticSearch - Alerts",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "elasticsearch",
+      "pluginName": "Elasticsearch"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "version": "3.0.0"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.1.1"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "datasource": "${DS_ELASTICSEARCH_- LOGS}",
+        "enable": false,
+        "iconColor": "rgb(247, 0, 0)",
+        "name": "Errors",
+        "query": "severity_label: Error && message: error",
+        "tagsField": "error",
+        "textField": "message",
+        "titleField": "program"
+      },
+      {
+        "datasource": "${DS_ELASTICSEARCH_- ALERTS}",
+        "enable": false,
+        "iconColor": "rgb(250, 255, 0)",
+        "name": "Alerts Fired",
+        "query": "status: \"firing\"",
+        "tagsField": "log_level",
+        "textField": "commonAnnotations.description",
+        "titleField": "commonAnnotations.summary"
+      },
+      {
+        "datasource": "${DS_ELASTICSEARCH_- ALERTS}",
+        "enable": false,
+        "iconColor": "rgb(0, 192, 51)",
+        "name": "Alerts Resolved",
+        "query": "status: \"resolved\"",
+        "tagsField": "log_level",
+        "textField": "commonAnnotations.description",
+        "titleField": "commonAnnotations.summary"
+      }
+    ]
+  },
+  "description": "Overview of the most important Docker swarm and container metrics. (cAdvisor/NodeExporter/Prometheus)",
+  "editable": true,
+  "gnetId": 609,
+  "graphTooltip": 1,
+  "hideControls": false,
+  "id": null,
+  "links": [],
+  "refresh": "1m",
+  "rows": [
+    {
+      "collapse": false,
+      "height": 143.625,
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 21,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": " nodes",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 2,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "targets": [
+            {
+              "expr": "count(node_load1)",
+              "intervalFactor": 2,
+              "refId": "A",
+              "step": 4
+            }
+          ],
+          "thresholds": "",
+          "title": "",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "aliasColors": {
+            "Ops-Infrastructure": "#447EBC",
+            "{}": "#DEDAF7"
+          },
+          "bars": true,
+          "datasource": "${DS_PROMETHEUS}",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "fill": 3,
+          "grid": {},
+          "id": 7,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 3,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 10,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 1.9899973849372385,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "count(rate(container_last_seen{container_label_com_docker_stack_namespace=~\"$stack_namespace\"}[$interval])) by (container_label_com_docker_stack_namespace)",
+              "intervalFactor": 2,
+              "legendFormat": "{{container_label_com_docker_stack_namespace}}",
+              "metric": "container_last_seen",
+              "refId": "A",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Containers # (by Service type)",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": false,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "none",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": 0,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "{id=\"/\",instance=\"cadvisor:8080\",job=\"prometheus\"}": "#BA43A9"
+          },
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 3,
+          "grid": {},
+          "id": 5,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "hideZero": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 2.0707047594142263,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "100 - (avg by (instance) (irate(node_cpu{mode=\"idle\",instance=~\"$instance\"}[$interval])) * 100)",
+              "hide": false,
+              "interval": "",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}}",
+              "metric": "",
+              "refId": "C",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "CPU Usage by Node",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": false,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 0,
+          "grid": {},
+          "id": 23,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/Free .*/",
+              "color": "#508642",
+              "linewidth": 2
+            },
+            {
+              "alias": "/Used .*/",
+              "color": "#BF1B00",
+              "yaxis": 2,
+              "zindex": 2
+            }
+          ],
+          "span": 2,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "node_filesystem_free{mountpoint=\"/\",instance=~\"$instance\"}",
+              "intervalFactor": 2,
+              "legendFormat": "Free {{instance}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "(node_filesystem_size{mountpoint=\"/\",instance=~\"$instance\"} - node_filesystem_free{mountpoint=\"/\",instance=~\"$instance\"}) * 100/ node_filesystem_size{mountpoint=\"/\",instance=~\"$instance\"}",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "Used {{instance}}",
+              "refId": "B",
+              "step": 2
+            }
+          ],
+          "thresholds": [
+            {
+              "colorMode": "custom",
+              "fill": true,
+              "fillColor": "rgba(216, 200, 27, 0.16)",
+              "op": "lt",
+              "value": 3000000000
+            },
+            {
+              "colorMode": "custom",
+              "fill": true,
+              "fillColor": "rgba(255, 0, 0, 0.27)",
+              "op": "lt",
+              "value": 1000000000
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Free Disk by Node",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": false,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": 0,
+              "show": true
+            },
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": 0,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Available Memory": "#7EB26D",
+            "Unavailable Memory": "#BF1B00"
+          },
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 4,
+          "grid": {},
+          "id": 20,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 3,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/Ava.*/",
+              "color": "#7EB26D"
+            },
+            {
+              "alias": "/Unava.*/",
+              "color": "#890F02"
+            }
+          ],
+          "span": 2,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "container_memory_rss{name=~\".+\"}",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "D",
+              "step": 30
+            },
+            {
+              "expr": "sum(container_memory_rss{name=~\".+\"})",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "A",
+              "step": 20
+            },
+            {
+              "expr": "container_memory_usage_bytes{name=~\".+\"}",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{name}}",
+              "refId": "B",
+              "step": 20
+            },
+            {
+              "expr": "container_memory_rss{id=\"/\"}",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "C",
+              "step": 30
+            },
+            {
+              "expr": "sum(container_memory_rss)",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "E",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_Buffers",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "node_memory_Dirty",
+              "refId": "N",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_MemFree",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "F",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_MemAvailable{instance=~\"$instance\"}",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "Available Memory {{instance}}",
+              "refId": "H",
+              "step": 2
+            },
+            {
+              "expr": "node_memory_MemTotal{instance=~\"$instance\"} - node_memory_MemAvailable{instance=~\"$instance\"}",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "Unavailable Memory {{instance}}",
+              "refId": "G",
+              "step": 2
+            },
+            {
+              "expr": "node_memory_Inactive",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "I",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_KernelStack",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "J",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_Active",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "K",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_MemTotal - (node_memory_Active + node_memory_MemFree + node_memory_Inactive)",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "Unknown",
+              "refId": "L",
+              "step": 40
+            },
+            {
+              "expr": "node_memory_MemFree + node_memory_Inactive ",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "M",
+              "step": 30
+            },
+            {
+              "expr": "container_memory_rss{name=~\".+\"}",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{__name__}}",
+              "refId": "O",
+              "step": 30
+            },
+            {
+              "expr": "node_memory_Inactive + node_memory_MemFree + node_memory_MemAvailable",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "",
+              "refId": "P",
+              "step": 40
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Available Memory by Node",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 1,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": false,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": 0,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 3,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 1.939297855648535,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(rate(node_disk_bytes_read{instance=~\"$instance\"}[$interval])) by (device, instance)",
+              "intervalFactor": 2,
+              "legendFormat": "OUT on /{{device}} {{instance}}",
+              "metric": "node_disk_bytes_read",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "sum(rate(node_disk_bytes_written{instance=~\"$instance\"}[$interval])) by (device, instance)",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "IN on /{{device}} {{instance}}",
+              "metric": "",
+              "refId": "B",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Disk I/O by Node",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": false,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "First Sight",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {
+            "SENT": "#BF1B00"
+          },
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 5,
+          "grid": {},
+          "id": 19,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": null,
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 1,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(rate(container_network_receive_bytes_total{id=\"/\"}[$interval])) by (id)",
+              "intervalFactor": 2,
+              "legendFormat": "RECEIVED",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "- sum(rate(container_network_transmit_bytes_total{id=\"/\"}[$interval])) by (id)",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "SENT",
+              "refId": "B",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Network Traffic on Cluster",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": false,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 29,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "Max defined limit",
+              "color": "#58140C",
+              "fill": 0,
+              "linewidth": 1
+            },
+            {
+              "alias": "Total cluster memory",
+              "fill": 0,
+              "linewidth": 1
+            },
+            {
+              "alias": "Limited",
+              "stack": true
+            },
+            {
+              "alias": "Unlimited",
+              "stack": true
+            }
+          ],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum((container_memory_usage_bytes{container_label_com_docker_swarm_task_id=~\".+\"}) and (container_spec_memory_limit_bytes{container_label_com_docker_swarm_task_id=~\".+\"} > 0))",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "Limited",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "sum((container_memory_usage_bytes{container_label_com_docker_swarm_task_id=~\".+\"}) and (container_spec_memory_limit_bytes{container_label_com_docker_swarm_task_id=~\".+\"} == 0))",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "Unlimited",
+              "refId": "B",
+              "step": 2
+            },
+            {
+              "expr": "sum((container_spec_memory_limit_bytes{container_label_com_docker_swarm_task_id=~\".+\"}) and (container_spec_memory_limit_bytes{container_label_com_docker_swarm_task_id=~\".+\"} > 0))",
+              "intervalFactor": 2,
+              "legendFormat": "Max defined limit",
+              "refId": "C",
+              "step": 2
+            },
+            {
+              "expr": "sum(node_memory_MemTotal)",
+              "intervalFactor": 2,
+              "legendFormat": "Total cluster memory",
+              "refId": "D",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Cluster Memory Limits",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Cluster network & memory",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 240.609375,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 5,
+          "grid": {},
+          "id": 1,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 5.996318015846883,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": " label_replace(topk($topk, sum without (cpu) (irate(container_cpu_usage_seconds_total{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"}[1m])) * 100), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[a-z0-9]{1,3}).*\\\\..*\")",
+              "hide": false,
+              "interval": "",
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "metric": "",
+              "refId": "A",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "CPU Usage per Container (Stacked)",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "node_load15": "#CCA300"
+          },
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 4,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6.003681984153117,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "node_load1{instance=~\"$instance\"}",
+              "intervalFactor": 2,
+              "legendFormat": "load1 {{instance}}",
+              "metric": "node",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "node_load5{instance=~\"$instance\"}",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "load5 {{instance}}",
+              "metric": "node",
+              "refId": "B",
+              "step": 2
+            },
+            {
+              "expr": "node_load15{instance=~\"$instance\"}",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "load15 {{instance}}",
+              "metric": "node",
+              "refId": "C",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "System Load on Node",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "CPU & LA",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 203.515625,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 25,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "label_replace(topk($topk,sum(rate(container_network_transmit_bytes_total{container_label_com_docker_swarm_service_name =~\"$proxy\",container_label_com_docker_swarm_node_id=~\"$node\"}[$interval])) by (name, container_label_com_docker_swarm_task_name)), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\",\"(.*\\\\.[a-z0-9]{1,3}).*\\\\..*\")",
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[$interval])",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "",
+              "refId": "B",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Sent Network Traffic (Proxy)",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 10,
+              "max": 8,
+              "min": 0,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 26,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "label_replace(topk($topk,sum(rate(container_network_receive_bytes_total{container_label_com_docker_swarm_service_name=~\"$proxy\",container_label_com_docker_swarm_node_id=~\"$node\"}[$interval])) by (name, container_label_com_docker_swarm_task_name)), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[a-z0-9]{1,3}).*\\\\..*\")",
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "- rate(container_network_transmit_bytes_total{name=~\".+\"}[$interval])",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{name}}",
+              "refId": "B",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Received Network Traffic (Proxy)",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 9,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "label_replace(topk($topk, sum(rate(container_network_transmit_bytes_total{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_service_name!~\"$proxy\",container_label_com_docker_swarm_node_id=~\"$node\"}[$interval])) by (name, container_label_com_docker_swarm_task_name)), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[a-z0-9]{1,3}).*\\\\..*\")",
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[$interval])",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "",
+              "refId": "B",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Sent Network Traffic per Container (excluding Proxy)",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 10,
+              "max": 8,
+              "min": 0,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 8,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "label_replace(topk($topk,sum(rate(container_network_receive_bytes_total{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_service_name!~\"$proxy\",container_label_com_docker_swarm_node_id=~\"$node\"}[$interval])) by (name, container_label_com_docker_swarm_task_name)), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[a-z0-9]{1,3}).*\\\\..*\")",
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "- rate(container_network_transmit_bytes_total{name=~\".+\"}[$interval])",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{name}}",
+              "refId": "B",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Received Network Traffic per Container (excluding Proxy)",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Network by container",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 222.703125,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fill": 3,
+          "grid": {},
+          "id": 10,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "label_replace(topk($topk, sum(container_memory_usage_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name =~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\"}) by (name, container_label_com_docker_swarm_task_name)), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[0-9]*).*\\\\..*\")",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "container_memory_usage_bytes{name=~\".+\"}",
+              "hide": true,
+              "intervalFactor": 2,
+              "legendFormat": "{{name}}",
+              "refId": "B",
+              "step": 240
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Memory Usage per Container (Stacked)",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": 0,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 0,
+          "grid": {},
+          "id": 28,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "hideZero": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "label_replace(sum(100 - (container_spec_memory_limit_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"} - container_memory_usage_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"})  * 100 / container_spec_memory_limit_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"}) by (container_label_com_docker_swarm_task_name,container_label_com_docker_swarm_task_id), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[0-9]*).*\\\\..*\")",
+              "hide": false,
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            }
+          ],
+          "thresholds": [
+            {
+              "colorMode": "custom",
+              "fill": true,
+              "fillColor": "rgba(248, 230, 29, 0.27)",
+              "op": "gt",
+              "value": 50
+            },
+            {
+              "colorMode": "custom",
+              "fill": true,
+              "fillColor": "rgba(229, 0, 0, 0.41)",
+              "op": "gt",
+              "value": 80
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Mem Hard Limit %",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": "",
+              "logBase": 1,
+              "max": 100,
+              "min": 0,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Memory",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "250px",
+      "panels": [
+        {
+          "columns": [
+            {
+              "text": "Avg",
+              "value": "avg"
+            }
+          ],
+          "datasource": "${DS_PROMETHEUS}",
+          "editable": true,
+          "error": false,
+          "fontSize": "100%",
+          "height": "500px",
+          "hideTimeOverride": false,
+          "id": 18,
+          "links": [],
+          "pageSize": 100,
+          "repeat": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": false
+          },
+          "span": 6,
+          "styles": [
+            {
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "cadvisor_version_info",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} cAdvisor Version: {{cadvisorVersion}}",
+              "refId": "A",
+              "step": 2
+            },
+            {
+              "expr": "prometheus_build_info",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} Prometheus Version: {{version}}",
+              "refId": "B",
+              "step": 2
+            },
+            {
+              "expr": "node_exporter_build_info",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} Node-Exporter Version: {{version}}",
+              "refId": "C",
+              "step": 2
+            },
+            {
+              "expr": "cadvisor_version_info",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} Docker Version: {{dockerVersion}}",
+              "refId": "D",
+              "step": 2
+            },
+            {
+              "expr": "cadvisor_version_info",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} Host OS Version: {{osVersion}}",
+              "refId": "E",
+              "step": 2
+            },
+            {
+              "expr": "cadvisor_version_info",
+              "intervalFactor": 2,
+              "legendFormat": "{{instance}} Host Kernel Version: {{kernelVersion}}",
+              "refId": "F",
+              "step": 2
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Versions",
+          "transform": "timeseries_aggregations",
+          "type": "table"
+        },
+        {
+          "columns": [
+            {
+              "text": "Current",
+              "value": "current"
+            }
+          ],
+          "editable": true,
+          "error": false,
+          "fontSize": "100%",
+          "height": "500px",
+          "id": 27,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 1,
+            "desc": true
+          },
+          "span": 6,
+          "styles": [
+            {
+              "colorMode": "cell",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [
+                "75",
+                "90"
+              ],
+              "type": "number",
+              "unit": "percent"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "label_replace(sum(100 - (container_spec_memory_limit_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"} - container_memory_usage_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"})  * 100 / container_spec_memory_limit_bytes{container_label_com_docker_stack_namespace=~\"$stack_namespace\",container_label_com_docker_swarm_service_name=~\"$service_name\",container_label_com_docker_swarm_node_id=~\"$node\",id=~\"/docker/.*\"}) by (container_label_com_docker_swarm_task_name,container_label_com_docker_swarm_task_id), \"task_name\", \"$1\", \"container_label_com_docker_swarm_task_name\", \"(.*\\\\.[a-z0-9]{1,3}).*\\\\..*\")",
+              "intervalFactor": 2,
+              "legendFormat": "{{task_name}}",
+              "refId": "A",
+              "step": 2
+            }
+          ],
+          "title": "Memory Limit %",
+          "transform": "timeseries_aggregations",
+          "transparent": false,
+          "type": "table"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Versions",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "90px",
+      "panels": [
+        {
+          "content": "Mixed values coming from cAdvisor and node-exporter. As the integration with Prometheus has been done via DNS there are some missing features.\nThe dashboard should be updated once this [issue](https://github.com/docker/docker/issues/27307) is finished, in Docker 1.13 only a few internal metrics are exposed, if you want them you can try [this dashboard](https://grafana.net/dashboards/1229).\n\nThe \"Proxy\" variable is useful to exclude the traffic generated by the selected services, assuming it's a traffic that routes the cluster traffic is useful to have it in a separated graph and exclude it from the generic network traffic graphs.",
+          "editable": true,
+          "error": false,
+          "height": "100px",
+          "id": 24,
+          "links": [],
+          "minSpan": 1,
+          "mode": "markdown",
+          "span": 12,
+          "title": "",
+          "transparent": false,
+          "type": "text"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Description",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [
+    "docker",
+    "swarm"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Node ID",
+        "multi": true,
+        "name": "node",
+        "options": [],
+        "query": "label_values(container_label_com_docker_swarm_node_id)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Hostnames",
+        "multi": true,
+        "name": "instance",
+        "options": [],
+        "query": "host",
+        "refresh": 1,
+        "regex": "/instance=\"([^\"]+)\"/",
+        "sort": 0,
+        "tagValuesQuery": "label_values({host=\"$tag\"},instance)",
+        "tags": [
+          "coppi-2",
+          "coppi-3",
+          "coppi-1"
+        ],
+        "tagsQuery": "label_values(host, host)",
+        "type": "query",
+        "useTags": true
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Stack",
+        "multi": true,
+        "name": "stack_namespace",
+        "options": [],
+        "query": "query_result(count(container_last_seen{container_label_com_docker_stack_namespace=~\".+\"}) by (container_label_com_docker_stack_namespace))",
+        "refresh": 1,
+        "regex": "/container_label_com_docker_stack_namespace=\"(.*)\"/",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Service",
+        "multi": true,
+        "name": "service_name",
+        "options": [],
+        "query": "query_result(count(container_last_seen{container_label_com_docker_swarm_service_name=~\".+\"}) by (container_label_com_docker_swarm_service_name))",
+        "refresh": 1,
+        "regex": "/container_label_com_docker_swarm_service_name=\"(.*)\"/",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Proxy",
+        "multi": true,
+        "name": "proxy",
+        "options": [],
+        "query": "query_result(count(container_last_seen{container_label_com_docker_swarm_service_name=~\".+\"}) by (container_label_com_docker_swarm_service_name))",
+        "refresh": 1,
+        "regex": "/container_label_com_docker_swarm_service_name=\"(.*)\"/",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "20",
+          "value": "20"
+        },
+        "datasource": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Top Cont.",
+        "multi": false,
+        "name": "topk",
+        "options": [
+          {
+            "selected": false,
+            "text": "5",
+            "value": "5"
+          },
+          {
+            "selected": false,
+            "text": "10",
+            "value": "10"
+          },
+          {
+            "selected": true,
+            "text": "20",
+            "value": "20"
+          },
+          {
+            "selected": false,
+            "text": "50",
+            "value": "50"
+          },
+          {
+            "selected": false,
+            "text": "100",
+            "value": "100"
+          },
+          {
+            "selected": false,
+            "text": "1000",
+            "value": "1000"
+          }
+        ],
+        "query": "5,10,20,50,100,1000",
+        "refresh": 0,
+        "type": "custom"
+      },
+      {
+        "auto": true,
+        "auto_count": 50,
+        "auto_min": "50s",
+        "current": {
+          "text": "auto",
+          "value": "$__auto_interval"
+        },
+        "datasource": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Interval",
+        "multi": false,
+        "name": "interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": false,
+            "text": "3m",
+            "value": "3m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "7m",
+            "value": "7m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "30s,1m,2m,3m,5m,7m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "refresh": 2,
+        "type": "interval"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Docker Swarm & Container Overview",
+  "version": 5
+}
