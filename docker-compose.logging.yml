@@ -1,0 +1,102 @@
+version: "3.1"
+
+networks:
+  logging:
+  monitoring_monitoring:
+    external: true
+
+services:
+  logspout:
+    image: bekt/logspout-logstash:latest
+    networks:
+      - logging
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      ROUTE_URIS: logstash://logstash:5000
+      DOCKER_LABELS: "true"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+
+  logstash:
+    image: basi/logstash:${LOGSTASH_VERSION:-v0.8.0}
+    networks:
+      - logging
+    environment:
+      DEBUG:                  "${LOGSTASH_DEBUG:-false}"
+      LOGSPOUT:               ignore
+      ELASTICSEARCH_USER:     ${ELASTICSEARCH_LOGS_USER}
+      ELASTICSEARCH_PASSWORD: ${ELASTICSEARCH_LOGS_PASSWORD}
+      ELASTICSEARCH_SSL:      ${ELASTICSEARCH_LOGS_SSL}
+      ELASTICSEARCH_ADDR:     ${ELASTICSEARCH_LOGS_ADDR:-elasticsearch}
+      ELASTICSEARCH_PORT:     ${ELASTICSEARCH_LOGS_PORT:-9200}
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 800M
+        reservations:
+          cpus: '0.25'
+          memory: 400M
+
+  elasticsearch:
+    image: elasticsearch:2
+    ports:
+      9200:9200
+    networks:
+      - logging
+      - monitoring_monitoring
+    environment:
+      - LOGSPOUT=ignore
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '2'
+          memory: 640M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  kibana:
+    image: kibana:4
+    networks:
+      - logging
+    ports:
+      - "5601:5601"
+    environment:
+      - LOGSPOUT=ignore
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 384M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
