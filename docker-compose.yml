@@ -3,13 +3,9 @@ version: "3"
 networks:
   monitoring:
 
-volumes:
-  prometheus:
-    driver: rexray
-
 services:
   cadvisor:
-    image: google/cadvisor:${CADVISOR_VERSION:-v0.24.1}
+    image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
     networks:
       - monitoring
     volumes:
@@ -87,7 +83,7 @@ services:
           memory: 16M
 
   prometheus:
-    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v0.4.1}
+    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v0.4.3}
     ports:
       - "9090"
     networks:
@@ -111,12 +107,11 @@ services:
     networks:
       - monitoring
     environment:
-      GF_SERVER_ROOT_URL: http://grafana.${CLUSTER_DOMAIN}
-      GF_SECURITY_ADMIN_PASSWORD: $GF_PASSWORD
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_PASSWORD:-admin}
       PROMETHEUS_ENDPOINT: http://prometheus:9090
-      ELASTICSEARCH_ENDPOINT: $ES_ADDRESS
-      ELASTICSEARCH_USER: $ES_USERNAME
-      ELASTICSEARCH_PASSWORD: $ES_PASSWORD
+      ELASTICSEARCH_ENDPOINT: ${ES_ADDRESS:-http://elasticsearch:9200}
+      ELASTICSEARCH_USER: ${ES_USERNAME}
+      ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
     deploy:
       mode: replicated
       replicas: 1
