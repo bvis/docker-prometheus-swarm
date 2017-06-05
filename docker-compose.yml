@@ -6,6 +6,8 @@ networks:
 services:
   cadvisor:
     image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
+    ports:
+      - "8082:8080"
     networks:
       - monitoring
     volumes:
@@ -59,28 +61,6 @@ services:
         reservations:
           cpus: '0.05'
           memory: 4M
-
-  alertmanager:
-    image: basi/alertmanager:${ALERTMANAGER_VERSION:-v0.1.0}
-    networks:
-      - monitoring
-      # - logging
-    ports:
-     - "9093:9093"
-    environment:
-      SLACK_API: ${SLACK_API:-YOURTOKENGOESHERE}
-      LOGSTASH_URL: http://logstash:8080/
-    command: -config.file=/etc/alertmanager/config.yml
-    deploy:
-      mode: replicated
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.01'
-          memory: 32M
-        reservations:
-          cpus: '0.01'
-          memory: 16M
 
   prometheus:
     image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v0.4.3}
