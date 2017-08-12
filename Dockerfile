@@ -1,4 +1,4 @@
-FROM prom/prometheus:v1.6.3
+FROM prom/prometheus:v1.7.1
 
 ARG "version=0.1.0-dev"
 ARG "build_date=unknown"

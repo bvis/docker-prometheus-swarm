@@ -5,7 +5,7 @@ networks:
 
 services:
   cadvisor:
-    image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
+    image: google/cadvisor:${CADVISOR_VERSION:-v0.26.1}
     networks:
       - monitoring
     volumes:
@@ -25,7 +25,7 @@ services:
           memory: 64M
 
   node-exporter:
-    image: basi/node-exporter:${NODE_EXPORTER_VERSION:-v1.13.0}
+    image: basi/node-exporter:${NODE_EXPORTER_VERSION:-latest}
     networks:
       - monitoring
     volumes:
@@ -33,6 +33,7 @@ services:
       - /sys:/host/sys
       - /:/rootfs
       - /etc/hostname:/etc/host_hostname
+    hostname: "{{.Node.ID}}"
     environment:
       HOST_HOSTNAME: /etc/host_hostname
     command: -collector.procfs "/host/proc" -collector.sysfs /host/sys -collector.textfile.directory /etc/node-exporter/ -collectors.enabled 'conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs' -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
@@ -61,7 +62,7 @@ services:
           memory: 4M
 
   alertmanager:
-    image: basi/alertmanager:${ALERTMANAGER_VERSION:-v0.1.0}
+    image: basi/alertmanager:${ALERTMANAGER_VERSION:-v0.8.0}
     networks:
       - monitoring
       # - logging
@@ -83,7 +84,7 @@ services:
           memory: 16M
 
   prometheus:
-    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v0.4.3}
+    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v1.7.1}
     ports:
       - "9090"
     networks:
@@ -101,7 +102,7 @@ services:
           memory: 128M
 
   grafana:
-    image: basi/grafana:${GRAFANA_VERSION:-v4.1.1}
+    image: basi/grafana:${GRAFANA_VERSION:-v4.4.3}
     ports:
       - "3000:3000"
     networks:
