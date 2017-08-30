@@ -84,7 +84,7 @@ services:
           memory: 16M
 
   prometheus:
-    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-v1.7.1}
+    image: basi/prometheus-swarm:${PROMETHEUS_SWARM_VERSION:-latest}
     ports:
       - "9090"
     networks:
